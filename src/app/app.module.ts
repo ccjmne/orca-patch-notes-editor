@@ -8,8 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyOwnCustomMaterialModule } from "./material/material.module";
 
-import { AppComponent } from './app.component';
 import { ApiService } from "./api/api.service";
+
+import { AppComponent } from './app.component';
+import { EditorComponent } from "./editor/editor.component";
 
 @NgModule({
   imports: [
@@ -21,7 +23,8 @@ import { ApiService } from "./api/api.service";
     MyOwnCustomMaterialModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    EditorComponent
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

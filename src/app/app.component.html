@@ -1,15 +1,17 @@
-<h1 class="mat-display-1">orca-patch-notes :: editor</h1>
-<mat-accordion color="primary">
-    <mat-expansion-panel *ngFor="let patch of patchNotes | async">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Version <span class="text-primary version-label">{{patch.version}}</span>
-            </mat-panel-title>
-            <mat-panel-description>
-                Last updated on {{patch.timestamp | date:'medium':'CET'}}
-            </mat-panel-description>
-        </mat-expansion-panel-header>
+<div class="container">
+    <h1 class="mat-display-1">orca-patch-notes :: editor</h1>
+    <mat-accordion color="primary">
+        <mat-expansion-panel *ngFor="let patch of patchNotes | async">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Version <span class="text-primary version-label">{{patch.version}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                    Last updated on {{patch.timestamp | date:'medium':'CET'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-        <pre>{{patch.contents | json}}</pre>
-    </mat-expansion-panel>
-</mat-accordion>
+            <editor [contents]="patch.contents"></editor>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,17 @@
+@import '/node_modules/simplemde/dist/simplemde.min.css';
+
+mat-divider.extended {
+  margin: 16px -24px;
+}
+
+.buttons {
+  display: flex;
+
+  .filler {
+    flex-grow: 1;
+  }
+
+  button + button {
+    margin-left: 1em;
+  }
+}

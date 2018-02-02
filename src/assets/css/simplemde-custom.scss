@@ -1,0 +1,10 @@
+.CodeMirror.cm-s-paper { // scss-lint:disable SelectorFormat
+  padding: 0;
+  border: 0;
+}
+
+.editor-toolbar {
+  // scss-lint:disable ImportantRule
+  padding: 0 !important;
+  border: 0 !important;
+}

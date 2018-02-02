@@ -9,10 +9,14 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getPatchNotes(version?: String): Observable<Object> {
-    return this.http.get(`${this.apiUrl}/${version || ''}?previous=true`);
+  listPatchNotes(version?: String): Observable<Object> {
+    return this.http.get(`${this.apiUrl}/?version=${version || ''}&previous=true`);
     // .mergeMap((res: any): Array<any> => typeof (res === 'Array') ? res : [res]) // split into entries
     // .map((entry: any) => Object.assign(entry, { date: new Date(entry.timestamp) })) // enhance items
     // .reduce((acc, value) => { return acc.push(value), acc; }, []); // aggregate back into an array
+  }
+
+  getPatchNotes(version: String): Observable<Object> {
+    return this.http.get(`${this.apiUrl}/${version}`);
   };
 }

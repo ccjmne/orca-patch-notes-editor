@@ -1,10 +1,10 @@
 @import url('//fonts.googleapis.com/icon?family=Material+Icons');
 
 @import './theme';
+@import './simplemde-custom';
 
 body {
   margin: 0;
-  padding: 64px 128px;
 }
 
 @each $color, $palette in ('primary': $patch-notes-primary, 'accent': $patch-notes-accent, 'warn': $patch-notes-warn) {

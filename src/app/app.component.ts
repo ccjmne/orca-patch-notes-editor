@@ -14,6 +14,6 @@ export class AppComponent {
   private readonly patchNotes: Observable<Object>;
 
   constructor(api: ApiService) {
-    this.patchNotes = api.getPatchNotes();
+    this.patchNotes = api.listPatchNotes();
   }
 }
