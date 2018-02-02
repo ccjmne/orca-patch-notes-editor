@@ -11,7 +11,7 @@ import { MyOwnCustomMaterialModule } from "./material/material.module";
 import { ApiService } from "./api/api.service";
 
 import { AppComponent } from './app.component';
-import { EditorComponent } from "./editor/editor.component";
+import { PatchEditorComponent } from "./patch-editor/patch-editor.component";
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { EditorComponent } from "./editor/editor.component";
   ],
   declarations: [
     AppComponent,
-    EditorComponent
+    PatchEditorComponent
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

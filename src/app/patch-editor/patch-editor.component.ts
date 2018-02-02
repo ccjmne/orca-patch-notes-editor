@@ -3,11 +3,11 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import * as SimpleMDE from 'simplemde';
 
 @Component({
-  selector: 'editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  selector: 'patch-editor',
+  templateUrl: './patch-editor.component.html',
+  styleUrls: ['./patch-editor.component.scss']
 })
-export class EditorComponent implements AfterViewInit {
+export class PatchEditorComponent implements AfterViewInit {
 
   @Input() private contents: String;
 
@@ -32,6 +32,10 @@ export class EditorComponent implements AfterViewInit {
   }
 
   save() {
-    throw 'Not implemented yet';
+    throw new Error('Not implemented yet');
+  }
+
+  delete() {
+    throw new Error('Not implemented yet');
   }
 }

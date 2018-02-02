@@ -5,11 +5,7 @@ mat-divider.extended {
 }
 
 .buttons {
-  display: flex;
-
-  .filler {
-    flex-grow: 1;
-  }
+  text-align: right;
 
   button + button {
     margin-left: 1em;
