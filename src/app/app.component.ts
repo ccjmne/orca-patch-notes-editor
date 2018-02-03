@@ -22,7 +22,7 @@ export class AppComponent {
       console.info(event);
 
       if (event.level !== Level.DEBUG) {
-        snackBar.open(event.message, 'OK', { duration: 2000 });
+        snackBar.open(event.message, 'OK', { duration: 3000 });
       }
     });
   }
