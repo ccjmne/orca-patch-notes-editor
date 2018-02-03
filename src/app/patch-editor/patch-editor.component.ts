@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import * as SimpleMDE from 'simplemde';
 
@@ -11,8 +11,9 @@ import { ApiService } from "../api/api.service";
 })
 export class PatchEditorComponent implements AfterViewInit {
 
-  @Input() private version: string;
-  @Input() private contents: string;
+  @Input() private readonly version: string;
+  @Input() private readonly contents: string;
+  @Output() contentsChange: EventEmitter<string> = new EventEmitter();
 
   @ViewChild('simplemde') textarea: ElementRef;
   private mde: SimpleMDE;
@@ -32,7 +33,12 @@ export class PatchEditorComponent implements AfterViewInit {
       ].reduce((acc, cur) => acc.concat(...['|', cur])),
       spellChecker: false,
       status: false,
-      autofocus: true
+      autofocus: true,
+      initialValue: this.contents
+    });
+
+    this.mde.codemirror.on('change', () => {
+      this.contentsChange.emit(this.mde.value());
     });
   }
 
@@ -42,5 +48,11 @@ export class PatchEditorComponent implements AfterViewInit {
 
   delete() {
     throw new Error('Not implemented yet');
+  }
+
+  ngOnChanges(changes: any) {
+    if (this.mde && changes.contents.currentValue !== this.mde.value()) {
+      this.mde.value(changes.contents.currentValue);
+    }
   }
 }
