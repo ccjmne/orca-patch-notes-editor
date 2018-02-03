@@ -37,7 +37,7 @@ export class ApiService {
   private readonly refreshAll: Subject<any> = new Subject();
   private readonly patchNotesStream: ConnectableObservable<Object> = this.refreshAll
     .startWith('')
-    .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`), 'Patch notes refreshed', 'Refreshing patch notes...'))
+    .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`), new DebugApiEvent('Patch notes refreshed'), 'Refreshing patch notes...'))
     .multicast(new Subject());
 
   get patchNotes() {
