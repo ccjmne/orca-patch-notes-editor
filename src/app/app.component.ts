@@ -30,4 +30,8 @@ export class AppComponent {
   refresh() {
     this.api.refreshPatchNotes();
   }
+
+  tracker(patch: any) {
+    return patch.version;
+  }
 }
