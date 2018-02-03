@@ -13,3 +13,7 @@ body {
     color: map-get($palette, default);
   }
 }
+
+button[mat-button] {
+  text-transform: uppercase;
+}
