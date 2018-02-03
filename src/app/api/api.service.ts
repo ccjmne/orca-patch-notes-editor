@@ -20,11 +20,11 @@ export class ApiService {
   private readonly debug: Subject<any> = new Subject();
   private readonly requests: Subject<any> = new Subject();
   readonly events: Observable<ApiEvent> = Observable.merge(
-    this.debug.map(v => new DebugApiEvent(v)),
-    this.requests.mergeMap(x => x.catch((err: Error) => Observable.of(ApiEvent.fromHTTPResponse(err))))
+    this.debug.map((v: ApiEvent) => new DebugApiEvent(v)),
+    this.requests.mergeMap((x: Observable<any>) => x.catch((err: Error) => Observable.of(ApiEvent.fromHTTPResponse(err))))
   ).map((v: any) => v instanceof ApiEvent ? v : new ApiEvent(v));
 
-  private logRequest(req: Observable<any>, successMessage: string | ApiEvent, debugMessage?: string | ApiEvent) {
+  private logRequest(req: Observable<any>, successMessage: string | ApiEvent, debugMessage?: string | ApiEvent): Observable<any> {
     if (debugMessage) { this.debug.next(debugMessage); }
     const res = req.multicast(new Subject());
     return res.connect() && this.requests.next(res.mapTo(successMessage)), res;
