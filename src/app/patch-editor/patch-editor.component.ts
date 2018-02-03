@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild } from '@angular/core';
 
 import * as SimpleMDE from 'simplemde';
 
@@ -9,7 +9,7 @@ import { ApiService } from "../api/api.service";
   templateUrl: './patch-editor.component.html',
   styleUrls: ['./patch-editor.component.scss']
 })
-export class PatchEditorComponent implements AfterViewInit {
+export class PatchEditorComponent implements AfterViewInit, OnChanges {
 
   @Input() private readonly version: string;
   @Input() private readonly contents: string;
