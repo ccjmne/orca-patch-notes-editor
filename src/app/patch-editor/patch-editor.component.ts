@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 
 import * as SimpleMDE from 'simplemde';
 
+import { ApiService } from "../api/api.service";
+
 @Component({
   selector: 'patch-editor',
   templateUrl: './patch-editor.component.html',
@@ -9,10 +11,13 @@ import * as SimpleMDE from 'simplemde';
 })
 export class PatchEditorComponent implements AfterViewInit {
 
-  @Input() private contents: String;
+  @Input() private version: string;
+  @Input() private contents: string;
 
   @ViewChild('simplemde') textarea: ElementRef;
   private mde: SimpleMDE;
+
+  constructor(private readonly api: ApiService) { }
 
   ngAfterViewInit() {
     this.mde = new SimpleMDE({
@@ -32,7 +37,7 @@ export class PatchEditorComponent implements AfterViewInit {
   }
 
   save() {
-    throw new Error('Not implemented yet');
+    this.api.putPatchNotes(this.version, this.mde.value());
   }
 
   delete() {
