@@ -1,7 +1,8 @@
 import { Observable } from "rxjs/Observable";
 
 import { Component } from '@angular/core';
-import { ApiService } from "./api/api.service";
+import { Level, ApiEvent, ApiService } from "./api/api.service";
+import { MatSnackBar } from '@angular/material';
 
 import '../assets/css/styles.scss';
 
@@ -11,9 +12,20 @@ import '../assets/css/styles.scss';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   private readonly patchNotes: Observable<Object>;
 
-  constructor(api: ApiService) {
+  constructor(api: ApiService, snackBar: MatSnackBar) {
     this.patchNotes = api.listPatchNotes();
+
+    api.events.subscribe((event: ApiEvent) => {
+      if (process.env.NODE_ENV !== 'production') {
+        console.info(event);
+      }
+
+      if (event.level !== Level.DEBUG) {
+        snackBar.open(event.message, 'OK', { duration: 2000 });
+      }
+    });
   }
 }
