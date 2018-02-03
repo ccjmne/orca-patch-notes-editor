@@ -2,7 +2,7 @@ import { Observable } from "rxjs/Observable";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { Subject } from "rxjs/Subject";
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiEvent, DebugApiEvent, Level } from "./apievent";
@@ -45,7 +45,7 @@ export class ApiService {
   }
 
 
-  constructor(private readonly http: HttpClient) { }
+  constructor( @Inject(HttpClient) private readonly http: HttpClient) { }
 
 
   /* ------------------------------------------------------------------------- *

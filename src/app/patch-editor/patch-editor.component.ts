@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 
 import * as SimpleMDE from 'simplemde';
 
@@ -18,7 +18,7 @@ export class PatchEditorComponent implements AfterViewInit {
   @ViewChild('simplemde') textarea: ElementRef;
   private mde: SimpleMDE;
 
-  constructor(private readonly api: ApiService) { }
+  constructor( @Inject(ApiService) private readonly api: ApiService) { }
 
   ngAfterViewInit() {
     this.mde = new SimpleMDE({

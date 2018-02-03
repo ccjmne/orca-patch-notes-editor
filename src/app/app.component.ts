@@ -1,6 +1,6 @@
 import { Observable } from "rxjs/Observable";
 
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Level, ApiEvent, ApiService } from "./api/api.service";
 import { MatSnackBar } from '@angular/material';
 
@@ -15,7 +15,7 @@ export class AppComponent {
 
   private readonly patchNotes: Observable<Object>;
 
-  constructor(private readonly api: ApiService, snackBar: MatSnackBar) {
+  constructor( @Inject(ApiService) private readonly api: ApiService, @Inject(MatSnackBar) snackBar: MatSnackBar) {
     this.patchNotes = api.patchNotes;
 
     api.events.subscribe((event: ApiEvent) => {
