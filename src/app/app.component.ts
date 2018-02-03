@@ -15,7 +15,10 @@ export class AppComponent {
 
   private readonly patchNotes: Observable<Object>;
 
-  constructor( @Inject(ApiService) private readonly api: ApiService, @Inject(MatSnackBar) snackBar: MatSnackBar) {
+  constructor(
+    @Inject(ApiService) private readonly api: ApiService,
+    @Inject(MatSnackBar) snackBar: MatSnackBar) {
+
     this.patchNotes = api.patchNotes;
 
     api.events.subscribe((event: ApiEvent) => {

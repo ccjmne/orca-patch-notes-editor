@@ -45,7 +45,8 @@ export class ApiService {
   }
 
 
-  constructor( @Inject(HttpClient) private readonly http: HttpClient) { }
+  constructor(
+    @Inject(HttpClient) private readonly http: HttpClient) { }
 
 
   /* ------------------------------------------------------------------------- *
