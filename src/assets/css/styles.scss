@@ -16,4 +16,20 @@ body {
 
 button[mat-button] {
   text-transform: uppercase;
+
+  + button[mat-button] {
+    margin-left: 8px;
+  }
+}
+
+mat-divider.extended {
+  margin: 16px -24px;
+
+  &.top {
+    margin-top: 0;
+  }
+
+  &.bottom {
+    margin-bottom: 0;
+  }
 }

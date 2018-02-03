@@ -1,15 +1,3 @@
-mat-divider.extended {
-  margin: 16px -24px;
-
-  &.topmost {
-    margin-top: 0;
-  }
-}
-
 .buttons {
   text-align: right;
-
-  button + button {
-    margin-left: .5em;
-  }
 }
