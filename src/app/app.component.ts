@@ -16,7 +16,7 @@ export class AppComponent {
   private readonly patchNotes: Observable<Object>;
 
   constructor(api: ApiService, snackBar: MatSnackBar) {
-    this.patchNotes = api.listPatchNotes();
+    this.patchNotes = api.patchNotes;
 
     api.events.subscribe((event: ApiEvent) => {
       console.info(event);
