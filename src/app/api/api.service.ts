@@ -1,4 +1,5 @@
 import { Observable } from "rxjs/Observable";
+import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { Subject } from "rxjs/Subject";
 
 import { Injectable } from '@angular/core';
@@ -13,6 +14,9 @@ export class ApiService {
 
   private static readonly API_URL: string = 'https://wfhqpe4fok.execute-api.eu-west-1.amazonaws.com/Prod';
 
+  /* ------------------------------------------------------------------------- *
+   * Event stream
+   * ------------------------------------------------------------------------- */
   private readonly debug: Subject<any> = new Subject();
   private readonly requests: Subject<any> = new Subject();
   readonly events: Observable<ApiEvent> = Observable.merge(
@@ -20,15 +24,36 @@ export class ApiService {
     this.requests.mergeMap(x => x.catch((err: Error) => Observable.of(ApiEvent.fromHTTPResponse(err))))
   ).map((v: any) => v instanceof ApiEvent ? v : new ApiEvent(v));
 
-  constructor(private readonly http: HttpClient) { }
-
   private logRequest(req: Observable<any>, successMessage: string | ApiEvent, debugMessage?: string | ApiEvent) {
     if (debugMessage) { this.debug.next(debugMessage); }
     return this.requests.next(req.mapTo(successMessage)), req;
   }
 
-  listPatchNotes(version?: string): Observable<Object> {
-    return this.http.get(`${ApiService.API_URL}/?version=${version || ''}&previous=true`);
+
+  /* ------------------------------------------------------------------------- *
+   * Patch notes stream
+   * ------------------------------------------------------------------------- */
+  private readonly refreshAll: Subject<any> = new Subject();
+  private readonly patchNotesStream: ConnectableObservable<Object> = this.refreshAll
+    .startWith('')
+    .mergeMapTo(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`))
+    .multicast(new Subject());
+
+  get patchNotes() {
+    this.patchNotesStream.connect();
+    return this.patchNotesStream;
+  }
+
+
+  constructor(private readonly http: HttpClient) { }
+
+
+  /* ------------------------------------------------------------------------- *
+   * API
+   * ------------------------------------------------------------------------- */
+
+  refreshPatchNotes() {
+    this.refreshAll.next();
   }
 
   getPatchNotes(version: string): Observable<Object> {
