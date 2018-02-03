@@ -1,7 +1,9 @@
-@import '/node_modules/simplemde/dist/simplemde.min.css';
-
 mat-divider.extended {
   margin: 16px -24px;
+
+  &.topmost {
+    margin-top: 0;
+  }
 }
 
 .buttons {

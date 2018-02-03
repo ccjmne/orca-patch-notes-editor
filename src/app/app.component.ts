@@ -19,9 +19,7 @@ export class AppComponent {
     this.patchNotes = api.listPatchNotes();
 
     api.events.subscribe((event: ApiEvent) => {
-      if (process.env.NODE_ENV !== 'production') {
-        console.info(event);
-      }
+      console.info(event);
 
       if (event.level !== Level.DEBUG) {
         snackBar.open(event.message, 'OK', { duration: 2000 });

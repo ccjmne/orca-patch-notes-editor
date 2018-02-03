@@ -24,9 +24,10 @@ export class ApiEvent {
 }
 
 class DebugApiEvent extends ApiEvent {
+
   constructor(message: string);
   constructor(source: ApiEvent);
-  constructor(readonly source: string | ApiEvent) {
+  constructor(source: string | ApiEvent) {
     super(source instanceof ApiEvent ? source.message : source, Level.DEBUG);
   }
 }
