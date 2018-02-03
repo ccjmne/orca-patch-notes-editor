@@ -16,6 +16,5 @@ import { PatchEditorComponent } from "./patch-editor.component";
   declarations: [
     PatchEditorComponent
   ],
-  providers: [ApiService]
 })
 export class PatchEditorModule { }

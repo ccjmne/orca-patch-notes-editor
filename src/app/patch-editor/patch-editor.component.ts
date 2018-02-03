@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import * as SimpleMDE from 'simplemde';
 
 import { ApiService } from "../api/api.service";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'patch-editor',
@@ -18,7 +20,9 @@ export class PatchEditorComponent implements AfterViewInit, OnChanges {
   @ViewChild('simplemde') textarea: ElementRef;
   private mde: SimpleMDE;
 
-  constructor( @Inject(ApiService) private readonly api: ApiService) { }
+  constructor(
+    @Inject(ApiService) private readonly api: ApiService,
+    @Inject(MatDialog) private readonly dialog: MatDialog) { }
 
   ngAfterViewInit() {
     this.mde = new SimpleMDE({
@@ -47,7 +51,12 @@ export class PatchEditorComponent implements AfterViewInit, OnChanges {
   }
 
   delete() {
-    throw new Error('Not implemented yet');
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        color: 'warn',
+        contents: `<span class="text-warn">Delete</span> patch notes for version: <span class="text-warn">${this.version}</span>?`
+      }
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.deletePatchNotes(this.version));
   }
 
   ngOnChanges(changes: any) {
