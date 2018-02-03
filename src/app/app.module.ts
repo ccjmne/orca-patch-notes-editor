@@ -7,11 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MyOwnCustomMaterialModule } from "./material/material.module";
+import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material";
 
-import { ApiService } from "./api/api.service";
-
-import { AppComponent } from './app.component';
 import { PatchEditorModule } from "./patch-editor/patch-editor.module";
+import { ApiService } from "./api/api.service";
+import { AppComponent } from './app.component';
+import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 
 @NgModule({
   imports: [
@@ -24,9 +25,14 @@ import { PatchEditorModule } from "./patch-editor/patch-editor.module";
     PatchEditorModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfirmDialogComponent
   ],
-  providers: [ApiService],
+  entryComponents: [ConfirmDialogComponent],
+  providers: [
+    ApiService,
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, width: '450px' } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
