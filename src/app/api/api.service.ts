@@ -26,7 +26,8 @@ export class ApiService {
 
   private logRequest(req: Observable<any>, successMessage: string | ApiEvent, debugMessage?: string | ApiEvent) {
     if (debugMessage) { this.debug.next(debugMessage); }
-    return this.requests.next(req.mapTo(successMessage)), req;
+    const res = req.multicast(new Subject());
+    return res.connect() && this.requests.next(res.mapTo(successMessage)), res;
   }
 
 
@@ -40,8 +41,7 @@ export class ApiService {
     .multicast(new Subject());
 
   get patchNotes() {
-    this.patchNotesStream.connect();
-    return this.patchNotesStream;
+    return this.patchNotesStream.connect() && this.patchNotesStream;
   }
 
 
