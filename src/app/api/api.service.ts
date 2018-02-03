@@ -61,6 +61,8 @@ export class ApiService {
   };
 
   putPatchNotes(version: string, body: string): Observable<Object> {
-    return this.logRequest(this.http.put(`${ApiService.API_URL}/${version}`, body), `Patch notes saved for version: ${version}`, `Saving patch notes for version: ${version}...`);
+    const res = this.logRequest(this.http.put(`${ApiService.API_URL}/${version}`, body), `Patch notes saved for version: ${version}`, `Saving patch notes for version: ${version}...`)
+    res.subscribe(() => this.refreshPatchNotes());
+    return res;
   }
 }
