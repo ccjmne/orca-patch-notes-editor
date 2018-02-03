@@ -1,5 +1,6 @@
 <div class="container">
     <h1 class="mat-display-1">orca-patch-notes :: editor</h1>
+    <button mat-button color="primary" (click)="refresh()" aria-label="refresh"><mat-icon aria-hidden="true">refresh</mat-icon></button>
     <mat-accordion color="primary">
         <mat-expansion-panel *ngFor="let patch of patchNotes | async">
             <mat-expansion-panel-header>
