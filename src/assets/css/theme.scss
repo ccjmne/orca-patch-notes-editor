@@ -9,8 +9,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$patch-notes-primary: mat-palette($mat-teal, 500);
-$patch-notes-accent:  mat-palette($mat-pink, A200, A100, A400);
+$patch-notes-primary: mat-palette($mat-blue-grey, 300);
+$patch-notes-accent:  mat-palette($mat-amber, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $patch-notes-warn:    mat-palette($mat-red);
