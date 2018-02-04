@@ -1,6 +1,7 @@
 import { Observable } from "rxjs/Observable";
 import { ConnectableObservable } from "rxjs/observable/ConnectableObservable";
 import { Subject } from "rxjs/Subject";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -33,9 +34,8 @@ export class ApiService {
   /* ------------------------------------------------------------------------- *
    * Patch notes stream
    * ------------------------------------------------------------------------- */
-  private readonly refreshAll: Subject<any> = new Subject();
+  private readonly refreshAll: Subject<any> = new BehaviorSubject(null);
   readonly patchNotes: Observable<Object> = this.refreshAll
-    .startWith(null)
     .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`).share(), new DebugApiEvent('Patch notes refreshed'), 'Refreshing patch notes...'));
 
 
