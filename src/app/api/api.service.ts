@@ -40,7 +40,7 @@ export class ApiService {
     .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`), new DebugApiEvent('Patch notes refreshed'), 'Refreshing patch notes...'))
     .multicast(new Subject());
 
-  get patchNotes() {
+  get patchNotes(): Observable<Object> {
     return this.patchNotesStream.connect() && this.patchNotesStream;
   }
 
