@@ -31,6 +31,10 @@ export class AppComponent {
     });
   }
 
+  tracker(patch: any) {
+    return patch.version;
+  }
+
   save(version: string, contents: string) {
     this.dialog.open(ConfirmDialogComponent, {
       data: {

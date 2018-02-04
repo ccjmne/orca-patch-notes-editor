@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="mat-display-1">orca-patch-notes :: editor</h1>
     <mat-accordion color="primary">
-        <mat-expansion-panel *ngFor="let patch of patchNotes | async ; trackBy: version" [expanded]="active === patch.version" (opened)="active = patch.version">
+        <mat-expansion-panel *ngFor="let patch of patchNotes | async ; trackBy: tracker" [expanded]="active === patch.version" (opened)="active = patch.version">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Version&nbsp;<span class="text-primary">{{patch.version}}</span>
