@@ -1,6 +1,7 @@
 @import '~simplemde/dist/simplemde.min.css';
 
-.CodeMirror.cm-s-paper { // scss-lint:disable SelectorFormat
+// scss-lint:disable SelectorFormat
+.CodeMirror {
   padding: 0;
   border: 0;
 }
@@ -9,4 +10,16 @@
   // scss-lint:disable ImportantRule
   padding: 0 !important;
   border: 0 !important;
+}
+
+.CodeMirror,
+.CodeMirror-scroll {
+  max-height: 300px;
+}
+
+.CodeMirror-fullscreen {
+  &.CodeMirror,
+  .CodeMirror-scroll {
+    max-height: none;
+  }
 }
