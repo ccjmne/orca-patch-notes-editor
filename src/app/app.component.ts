@@ -36,14 +36,23 @@ export class AppComponent {
   }
 
   save(version: string, contents: string) {
-    this.api.putPatchNotes(version, contents);
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        color: 'primary',
+        title: 'Confirm update',
+        confirmLabel: 'Update',
+        contents: `<span class="text-primary">Update</span> patch notes for version <span class="text-primary">${version}</span>?`
+      }
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.putPatchNotes(version, contents));
   }
 
   delete(version: string) {
     this.dialog.open(ConfirmDialogComponent, {
       data: {
         color: 'warn',
-        contents: `<span class="text-warn">Delete</span> patch notes for version: <span class="text-warn">${version}</span>?`
+        title: 'Confirm deletion',
+        confirmLabel: 'Delete',
+        contents: `<span class="text-warn">Delete</span> patch notes for version <span class="text-warn">${version}</span>?`
       }
     }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.deletePatchNotes(version));
   }
