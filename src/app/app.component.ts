@@ -1,4 +1,5 @@
 import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 import { Component, Inject } from '@angular/core';
 import { Level, ApiEvent, ApiService } from "./api/api.service";
@@ -35,6 +36,9 @@ export class AppComponent {
     return patch.version;
   }
 
+  private readonly busyTrigger: BehaviorSubject<Observable<any>> = new BehaviorSubject(Observable.of(false));
+  private readonly busy: Observable<boolean> = Observable.merge(this.busyTrigger.mapTo(true), this.busyTrigger.mergeMap(x => x).mapTo(false));
+
   save(version: string, contents: string) {
     this.dialog.open(ConfirmDialogComponent, {
       data: {
@@ -43,7 +47,7 @@ export class AppComponent {
         confirmLabel: 'Update',
         contents: `<span class="text-primary">Update</span> patch notes for version <span class="text-primary">${version}</span>?`
       }
-    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.putPatchNotes(version, contents));
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.busyTrigger.next(this.api.putPatchNotes(version, contents)));
   }
 
   delete(version: string) {
@@ -54,6 +58,6 @@ export class AppComponent {
         confirmLabel: 'Delete',
         contents: `<span class="text-warn">Delete</span> patch notes for version <span class="text-warn">${version}</span>?`
       }
-    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.deletePatchNotes(version));
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.busyTrigger.next(this.api.deletePatchNotes(version)));
   }
 }
