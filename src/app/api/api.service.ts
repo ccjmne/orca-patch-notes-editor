@@ -26,8 +26,7 @@ export class ApiService {
 
   private logRequest(req: Observable<any>, successMessage: string | ApiEvent, debugMessage?: string | ApiEvent): Observable<any> {
     if (debugMessage) { this.debug.next(debugMessage); }
-    const res = req.multicast(new Subject());
-    return res.connect() && this.requests.next(res.mapTo(successMessage)), res;
+    return this.requests.next(req.mapTo(successMessage)), req;
   }
 
 
@@ -35,14 +34,9 @@ export class ApiService {
    * Patch notes stream
    * ------------------------------------------------------------------------- */
   private readonly refreshAll: Subject<any> = new Subject();
-  private readonly patchNotesStream: ConnectableObservable<Object> = this.refreshAll
-    .startWith('')
-    .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`), new DebugApiEvent('Patch notes refreshed'), 'Refreshing patch notes...'))
-    .multicast(new Subject());
-
-  get patchNotes(): Observable<Object> {
-    return this.patchNotesStream.connect() && this.patchNotesStream;
-  }
+  readonly patchNotes: Observable<Object> = this.refreshAll
+    .startWith(null)
+    .mergeMap(() => this.logRequest(this.http.get(`${ApiService.API_URL}/?version=${''}&previous=true`).share(), new DebugApiEvent('Patch notes refreshed'), 'Refreshing patch notes...'));
 
 
   constructor(
@@ -62,13 +56,13 @@ export class ApiService {
   };
 
   putPatchNotes(version: string, body: string): Observable<Object> {
-    const res = this.logRequest(this.http.put(`${ApiService.API_URL}/${version}`, body), `Saved patch notes for version: ${version}`, `Saving patch notes for version: ${version}...`)
+    const res = this.logRequest(this.http.put(`${ApiService.API_URL}/${version}`, body).share(), `Saved patch notes for version: ${version}`, `Saving patch notes for version: ${version}...`)
     res.subscribe(() => this.refreshPatchNotes());
     return res;
   }
 
   deletePatchNotes(version: string): Observable<Object> {
-    const res = this.logRequest(this.http.delete(`${ApiService.API_URL}/${version}`), `Deleted Patch notes for version: ${version}`, `Deleting patch notes for version: ${version}...`)
+    const res = this.logRequest(this.http.delete(`${ApiService.API_URL}/${version}`).share(), `Deleted Patch notes for version: ${version}`, `Deleting patch notes for version: ${version}...`)
     res.subscribe(() => this.refreshPatchNotes());
     return res;
   }
