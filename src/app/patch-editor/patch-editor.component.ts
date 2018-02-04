@@ -39,7 +39,7 @@ export class PatchEditorComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: any) {
-    if (this.mde && changes.contents.currentValue !== this.mde.value()) {
+    if (this.mde && changes.contents && changes.contents.currentValue !== this.mde.value()) {
       this.mde.value(changes.contents.currentValue);
     }
   }
