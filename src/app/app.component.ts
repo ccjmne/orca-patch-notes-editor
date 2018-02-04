@@ -2,7 +2,9 @@ import { Observable } from "rxjs/Observable";
 
 import { Component, Inject } from '@angular/core';
 import { Level, ApiEvent, ApiService } from "./api/api.service";
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
+
+import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 
 import '../assets/css/styles.scss';
 
@@ -17,6 +19,7 @@ export class AppComponent {
 
   constructor(
     @Inject(ApiService) private readonly api: ApiService,
+    @Inject(MatDialog) private readonly dialog: MatDialog,
     @Inject(MatSnackBar) snackBar: MatSnackBar) {
 
     api.events.subscribe((event: ApiEvent) => {
@@ -30,5 +33,18 @@ export class AppComponent {
 
   tracker(patch: any) {
     return patch.version;
+  }
+
+  save(version: string, contents: string) {
+    this.api.putPatchNotes(version, contents);
+  }
+
+  delete(version: string) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        color: 'warn',
+        contents: `<span class="text-warn">Delete</span> patch notes for version: <span class="text-warn">${version}</span>?`
+      }
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.api.deletePatchNotes(version));
   }
 }
