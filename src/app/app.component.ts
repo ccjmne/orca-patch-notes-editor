@@ -13,13 +13,11 @@ import '../assets/css/styles.scss';
 })
 export class AppComponent {
 
-  private readonly patchNotes: Observable<Object>;
+  private readonly patchNotes: Observable<Object> = this.api.patchNotes;
 
   constructor(
     @Inject(ApiService) private readonly api: ApiService,
     @Inject(MatSnackBar) snackBar: MatSnackBar) {
-
-    this.patchNotes = api.patchNotes;
 
     api.events.subscribe((event: ApiEvent) => {
       console.info(event);
@@ -28,10 +26,6 @@ export class AppComponent {
         snackBar.open(event.message, 'OK', { duration: 5000 });
       }
     });
-  }
-
-  refresh() {
-    this.api.refreshPatchNotes();
   }
 
   tracker(patch: any) {
