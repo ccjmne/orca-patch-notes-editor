@@ -11,10 +11,14 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
+            <mat-divider class="extended top"></mat-divider>
+            <div class="extended" [hidden]="!(busy | async)">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
             <patch-editor [version]="patch.version" [(contents)]="patch.contents"></patch-editor>
             <mat-action-row>
-                <button mat-button color="warn" (click)="delete(patch.version)">Delete</button>
-                <button mat-button color="primary" (click)="save(patch.version, patch.contents)">Update</button>
+                <button [disabled]="busy | async" mat-button color="warn" (click)="delete(patch.version)">Delete</button>
+                <button [disabled]="busy | async" mat-button color="primary" (click)="save(patch.version, patch.contents)">Update</button>
             </mat-action-row>
         </mat-expansion-panel>
     </mat-accordion>

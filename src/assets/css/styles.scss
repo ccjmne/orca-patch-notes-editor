@@ -22,6 +22,10 @@ button[mat-button] {
   }
 }
 
+.mat-expansion-panel-body > .extended {
+  margin: 0 -24px;
+}
+
 mat-divider.extended {
   margin: 16px -24px;
 
