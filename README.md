@@ -12,6 +12,11 @@ Developed with:
 
 - The [Angular Material](https://material.angular.io/) components library
 
+## TODO
+
+- [ ] Package into an [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stack
+- [ ] Set up DNS records to expose the editor behind a human-readable URL
+
 ## See also
 
 [`orca-patch-notes`](https://github.com/ccjmne/orca-patch-notes)
