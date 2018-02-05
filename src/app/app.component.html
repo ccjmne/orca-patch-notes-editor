@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="mat-display-1">orca-patch-notes :: editor</h1>
     <mat-accordion color="primary">
-        <mat-expansion-panel #newPatchPanel>
+        <mat-expansion-panel (opened)="activePatch = 'create'">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Create new patch notes

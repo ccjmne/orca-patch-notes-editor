@@ -39,7 +39,7 @@ export class AppComponent {
   }
 
   clearNewPatch() {
-    Object.assign(this.newPatch, { version: null, contents: '' });
+    Object.assign(this.newPatch, { version: undefined, contents: '' });
   }
 
   private readonly busyTrigger: BehaviorSubject<Observable<any>> = new BehaviorSubject(Observable.of(false));
@@ -57,7 +57,7 @@ export class AppComponent {
       const put = this.api.putPatchNotes(version, contents);
       this.busyTrigger.next(put);
       if (create) {
-        put.onErrorResumeNext().subscribe(() => { this.clearNewPatch(); this.activePatch = version })
+        put.onErrorResumeNext().subscribe(() => { this.clearNewPatch(); this.activePatch = version; })
       };
     });
   }
