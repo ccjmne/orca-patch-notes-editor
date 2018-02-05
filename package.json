@@ -1,11 +1,24 @@
 {
-  "name": "angular5-webpack",
-  "version": "1.0.0",
-  "description": "A webpack starter for Angular",
+  "name": "orca-patch-notes-editor",
+  "version": "0.1.0",
+  "description": "Angular 5 web application for editing and publishing patch notes for NCLS Development's Orca solution",
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 8001",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
+  "author": {
+    "name": "ccjmne",
+    "email": "ccjmne@gmail.com",
+    "url": "https://github.com/ccjmne"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular5",
+    "material",
+    "nclsdevelopment",
+    "orca"
+  ],
   "license": "MIT",
   "dependencies": {
     "@angular/animations": "^5.2.2",

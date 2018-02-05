@@ -16,7 +16,7 @@ Developed with:
 
 [`orca-patch-notes`](https://github.com/ccjmne/orca-patch-notes)
 
-The Serverless API backend for this project leveraging [AWS CloudFormation](https://aws.amazon.com/cloudformation/)
+The Serverless API backend for this project leveraging [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
 
 ## Development
 
