@@ -17,6 +17,8 @@ import '../assets/css/styles.scss';
 export class AppComponent {
 
   private readonly patchNotes: Observable<Object> = this.api.patchNotes;
+  private readonly newPatch: any = {};
+  private activePatch: string;
 
   constructor(
     @Inject(ApiService) private readonly api: ApiService,
@@ -36,18 +38,28 @@ export class AppComponent {
     return patch.version;
   }
 
-  private readonly busyTrigger: BehaviorSubject<Observable<any>> = new BehaviorSubject(Observable.of(false));
-  private readonly busy: Observable<boolean> = Observable.merge(this.busyTrigger.mapTo(true), this.busyTrigger.mergeMap(x => x).mapTo(false));
+  clearNewPatch() {
+    Object.assign(this.newPatch, { version: null, contents: '' });
+  }
 
-  save(version: string, contents: string) {
+  private readonly busyTrigger: BehaviorSubject<Observable<any>> = new BehaviorSubject(Observable.of(false));
+  private readonly busy: Observable<boolean> = Observable.merge(this.busyTrigger.mapTo(true), this.busyTrigger.mergeMap(x => x.catch(() => Observable.of(false))).mapTo(false));
+
+  save(version: string, contents: string, create?: boolean) {
     this.dialog.open(ConfirmDialogComponent, {
       data: {
         color: 'primary',
-        title: 'Confirm update',
-        confirmLabel: 'Update',
-        contents: `<span class="text-primary">Update</span> patch notes for version <span class="text-primary">${version}</span>?`
+        title: create ? 'Confirm creation' : 'Confirm update',
+        confirmLabel: create ? 'Create' : 'Update',
+        contents: `<span class="text-primary">${create ? 'Create' : 'Update'}</span> patch notes for version <span class="text-primary">${version}</span>?`
       }
-    }).afterClosed().filter((x: boolean) => x).subscribe(() => this.busyTrigger.next(this.api.putPatchNotes(version, contents)));
+    }).afterClosed().filter((x: boolean) => x).subscribe(() => {
+      const put = this.api.putPatchNotes(version, contents);
+      this.busyTrigger.next(put);
+      if (create) {
+        put.onErrorResumeNext().subscribe(() => { this.clearNewPatch(); this.activePatch = version })
+      };
+    });
   }
 
   delete(version: string) {
