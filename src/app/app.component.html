@@ -12,7 +12,8 @@
                 <mat-progress-bar [mode]="(busy | async) ? 'indeterminate' : 'determinate'"></mat-progress-bar>
             </div>
             <mat-form-field floatLabel="auto">
-                <input matInput placeholder="Version" [(ngModel)]="newPatch.version">
+                <mat-label>Version</mat-label>
+                <input matInput placeholder="Following Semantic Versioning 2.0.0" [(ngModel)]="newPatch.version">
             </mat-form-field>
             <mat-divider class="extended top bottom"></mat-divider>
             <patch-editor [version]="newPatch.version" [(contents)]="newPatch.contents"></patch-editor>
