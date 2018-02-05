@@ -22,11 +22,8 @@ button[mat-button] {
   }
 }
 
-.mat-expansion-panel-body > .extended {
-  margin: 0 -24px;
-}
-
-mat-divider.extended {
+.mat-expansion-panel-body > .extended,
+.mat-dialog-container > * > .extended {
   margin: 16px -24px;
 
   &.top {
@@ -36,4 +33,8 @@ mat-divider.extended {
   &.bottom {
     margin-bottom: 0;
   }
+}
+
+mat-form-field {
+  width: 100%;
 }

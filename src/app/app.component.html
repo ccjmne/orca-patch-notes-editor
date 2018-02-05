@@ -11,9 +11,8 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <mat-divider class="extended top"></mat-divider>
-            <div class="extended" [hidden]="!(busy | async)">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <div class="extended top bottom">
+                <mat-progress-bar [mode]="(busy | async) ? 'indeterminate' : 'determinate'"></mat-progress-bar>
             </div>
             <patch-editor [version]="patch.version" [(contents)]="patch.contents"></patch-editor>
             <mat-action-row>
