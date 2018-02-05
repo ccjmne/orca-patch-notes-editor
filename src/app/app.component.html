@@ -1,7 +1,27 @@
 <div class="container">
     <h1 class="mat-display-1">orca-patch-notes :: editor</h1>
     <mat-accordion color="primary">
-        <mat-expansion-panel *ngFor="let patch of patchNotes | async ; trackBy: tracker" [expanded]="active === patch.version" (opened)="active = patch.version">
+        <mat-expansion-panel #newPatchPanel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Create new patch notes
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="extended top">
+                <mat-progress-bar [mode]="(busy | async) ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+            </div>
+            <mat-form-field floatLabel="auto">
+                <input matInput placeholder="Version" [(ngModel)]="newPatch.version">
+            </mat-form-field>
+            <mat-divider class="extended top bottom"></mat-divider>
+            <patch-editor [version]="newPatch.version" [(contents)]="newPatch.contents"></patch-editor>
+            <mat-action-row>
+                <button [disabled]="busy | async" mat-button color="primary" (click)="save(newPatch.version, newPatch.contents, true)">Create</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+        <br>
+        <mat-expansion-panel *ngFor="let patch of patchNotes | async ; trackBy: tracker" [expanded]="activePatch === patch.version" (opened)="activePatch = patch.version">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Version&nbsp;<span class="text-primary">{{patch.version}}</span>
